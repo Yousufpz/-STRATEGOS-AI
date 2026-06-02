@@ -37,13 +37,13 @@ QDRANT_URL = os.getenv("QDRANT_URL")
 QDRANT_API_KEY = os.getenv("QDRANT_API_KEY")
 COLLECTION_NAME = os.getenv("COLLECTION_NAME", "RAGDB48Lawsofpower")
 
-# text-embedding-004 produces 768-dimensional vectors (same as nomic-embed-text)
-VECTOR_SIZE = 768
+# gemini-embedding-001 produces 3072-dimensional vectors
+VECTOR_SIZE = 3072
 
 
 def get_embedding(text: str) -> list[float]:
     """
-    Call Google Gemini text-embedding-004 API.
+    Call Google Gemini Embedding API (gemini-embedding-001).
     Returns a list of 768 floats.
     Free tier: 1500 requests/day, 100 requests/minute.
     """
@@ -52,12 +52,12 @@ def get_embedding(text: str) -> list[float]:
 
     url = (
         f"https://generativelanguage.googleapis.com/v1beta/models/"
-        f"text-embedding-004:embedContent?key={GEMINI_API_KEY}"
+        f"gemini-embedding-001:embedContent?key={GEMINI_API_KEY}"
     )
     response = requests.post(
         url,
         json={
-            "model": "models/text-embedding-004",
+            "model": "models/gemini-embedding-001",
             "content": {"parts": [{"text": text}]},
             "taskType": "RETRIEVAL_DOCUMENT"
         },

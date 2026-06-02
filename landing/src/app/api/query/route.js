@@ -250,13 +250,14 @@ export async function POST(request) {
     let queryVector;
 
     async function getGeminiEmbedding(text, geminiKey) {
-      // Gemini text-embedding-004 produces 768-dim vectors — same size as nomic-embed-text
-      const url = `https://generativelanguage.googleapis.com/v1beta/models/text-embedding-004:embedContent?key=${geminiKey}`;
+      // gemini-embedding-001 produces 768-dim vectors — same size as nomic-embed-text
+      // Uses v1beta endpoint (where gemini-embedding-001 is available)
+      const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-embedding-001:embedContent?key=${geminiKey}`;
       const res = await fetch(url, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          model: "models/text-embedding-004",
+          model: "models/gemini-embedding-001",
           content: { parts: [{ text }] },
           taskType: "RETRIEVAL_QUERY"
         }),
