@@ -8,7 +8,7 @@ import anthropic
 import requests
 
 # Load environment variables
-load_dotenv()
+load_dotenv(override=True)
 
 # Configuration variables
 GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")

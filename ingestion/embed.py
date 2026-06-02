@@ -8,17 +8,19 @@ similar meanings cluster together in vector space.
 will have vectors very close to each other, even with 0 shared words.
 That's the magic of semantic search.
 
-We use nomic-embed-text (via Ollama) — free, local, excellent quality.
+We use Google's text-embedding-004 (via Gemini API) — free, cloud-native,
+no local server required. It produces 768-dimensional vectors.
 We store vectors in Qdrant with metadata (law, page, section) as payload.
 """
 
 import json
 import os
 import sys
+import time
 import requests
 from qdrant_client import QdrantClient
 from qdrant_client.models import (
-    Distance, VectorParams, PointStruct, 
+    Distance, VectorParams, PointStruct,
     OptimizersConfigDiff
 )
 from dotenv import load_dotenv
@@ -28,30 +30,41 @@ if sys.platform == "win32" and hasattr(sys.stdout, "reconfigure"):
     sys.stdout.reconfigure(encoding="utf-8")
     sys.stderr.reconfigure(encoding="utf-8")
 
-load_dotenv()
+load_dotenv(override=True)
 
-OLLAMA_BASE_URL = os.getenv("OLLAMA_BASE_URL", "http://localhost:11434")
-EMBED_MODEL = os.getenv("EMBED_MODEL", "nomic-embed-text")
-QDRANT_URL = os.getenv("QDRANT_URL", "http://localhost:6333")
-QDRANT_API_KEY = os.getenv("QDRANT_API_KEY", None)
-COLLECTION_NAME = os.getenv("COLLECTION_NAME", "strategos_laws")
+GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
+QDRANT_URL = os.getenv("QDRANT_URL")
+QDRANT_API_KEY = os.getenv("QDRANT_API_KEY")
+COLLECTION_NAME = os.getenv("COLLECTION_NAME", "RAGDB48Lawsofpower")
 
-# nomic-embed-text produces 768-dimensional vectors
+# text-embedding-004 produces 768-dimensional vectors (same as nomic-embed-text)
 VECTOR_SIZE = 768
 
 
 def get_embedding(text: str) -> list[float]:
     """
-    Call Ollama's embedding endpoint for one text.
+    Call Google Gemini text-embedding-004 API.
     Returns a list of 768 floats.
+    Free tier: 1500 requests/day, 100 requests/minute.
     """
+    if not GEMINI_API_KEY:
+        raise ValueError("GEMINI_API_KEY is not set in your .env file.")
+
+    url = (
+        f"https://generativelanguage.googleapis.com/v1beta/models/"
+        f"text-embedding-004:embedContent?key={GEMINI_API_KEY}"
+    )
     response = requests.post(
-        f"{OLLAMA_BASE_URL}/api/embeddings",
-        json={"model": EMBED_MODEL, "prompt": text},
+        url,
+        json={
+            "model": "models/text-embedding-004",
+            "content": {"parts": [{"text": text}]},
+            "taskType": "RETRIEVAL_DOCUMENT"
+        },
         timeout=30
     )
     response.raise_for_status()
-    return response.json()["embedding"]
+    return response.json()["embedding"]["values"]
 
 
 def get_qdrant_client() -> QdrantClient:

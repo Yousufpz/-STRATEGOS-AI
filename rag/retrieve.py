@@ -20,7 +20,7 @@ from qdrant_client import QdrantClient
 from qdrant_client.models import Filter
 from dotenv import load_dotenv
 
-load_dotenv()
+load_dotenv(override=True)
 
 OLLAMA_BASE_URL = os.getenv("OLLAMA_BASE_URL", "http://localhost:11434")
 EMBED_MODEL = os.getenv("EMBED_MODEL", "nomic-embed-text")

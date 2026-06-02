@@ -244,27 +244,64 @@ export async function POST(request) {
       rewrittenQuery = query;
     }
 
-    // 3. Generate Vector Embedding (using Ollama's local nomic-embed-text)
-    const ollamaUrl = process.env.OLLAMA_BASE_URL || "http://localhost:11434";
-    const embedModel = process.env.EMBED_MODEL || "nomic-embed-text";
+    // 3. Generate Vector Embedding
+    // Strategy: Try Gemini Embedding API first (free, cloud-native, works in production).
+    //           Fall back to local Ollama if Gemini key is unavailable.
     let queryVector;
-    
-    try {
-      const embedRes = await fetch(`${ollamaUrl}/api/embeddings`, {
+
+    async function getGeminiEmbedding(text, geminiKey) {
+      // Gemini text-embedding-004 produces 768-dim vectors — same size as nomic-embed-text
+      const url = `https://generativelanguage.googleapis.com/v1beta/models/text-embedding-004:embedContent?key=${geminiKey}`;
+      const res = await fetch(url, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ model: embedModel, prompt: rewrittenQuery }),
+        body: JSON.stringify({
+          model: "models/text-embedding-004",
+          content: { parts: [{ text }] },
+          taskType: "RETRIEVAL_QUERY"
+        }),
         signal: AbortSignal.timeout(30000)
       });
-      if (!embedRes.ok) {
-        throw new Error(`Ollama embeddings returned status ${embedRes.status}`);
+      if (!res.ok) {
+        const err = await res.json().catch(() => ({}));
+        throw new Error(err.error?.message || `Gemini Embedding API returned status ${res.status}`);
       }
-      const embedData = await embedRes.json();
-      queryVector = embedData.embedding;
+      const data = await res.json();
+      return data.embedding?.values;
+    }
+
+    async function getOllamaEmbedding(text) {
+      const ollamaUrl = process.env.OLLAMA_BASE_URL || "http://localhost:11434";
+      const embedModel = process.env.EMBED_MODEL || "nomic-embed-text";
+      const res = await fetch(`${ollamaUrl}/api/embeddings`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ model: embedModel, prompt: text }),
+        signal: AbortSignal.timeout(15000)
+      });
+      if (!res.ok) throw new Error(`Ollama embeddings returned status ${res.status}`);
+      const data = await res.json();
+      return data.embedding;
+    }
+
+    const geminiKey = apiKey || process.env.GEMINI_API_KEY;
+    try {
+      if (geminiKey) {
+        // ✅ Production path: Gemini Embedding API (free, always available)
+        queryVector = await getGeminiEmbedding(rewrittenQuery, geminiKey);
+      } else {
+        // Local development fallback: Ollama
+        queryVector = await getOllamaEmbedding(rewrittenQuery);
+      }
     } catch (e) {
-      return NextResponse.json({
-        error: `Ollama connection failed: ${e.message}. Ensure Ollama is running and you pulled the embedding model: 'ollama pull ${embedModel}'`
-      }, { status: 500 });
+      // Final fallback: try Ollama if Gemini failed
+      try {
+        queryVector = await getOllamaEmbedding(rewrittenQuery);
+      } catch (ollamaErr) {
+        return NextResponse.json({
+          error: `Embedding generation failed. Gemini: ${e.message}. Ollama fallback: ${ollamaErr.message}. Tip: Provide a Gemini API key for production use.`
+        }, { status: 500 });
+      }
     }
 
     // 4. Query Qdrant Vector Database
@@ -320,7 +357,7 @@ export async function POST(request) {
 
     // 5. Generate Answer via LLM
     const genModelMap = {
-      Gemini: "gemini-1.5-pro",
+      Gemini: "gemini-2.5-flash",
       OpenAI: "gpt-4o",
       Anthropic: "claude-3-5-sonnet-20241022",
       Ollama: process.env.CHUNK_MODEL || "gemma3:4b"

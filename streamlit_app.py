@@ -25,7 +25,7 @@ from rag.rewrite import rewrite_query
 from rag.retrieve import retrieve
 from rag.generate import generate_answer
 
-load_dotenv()
+load_dotenv(override=True)
 
 # ─────────────────────────────────────────────
 # Page Config

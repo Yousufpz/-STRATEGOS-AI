@@ -22,7 +22,7 @@ if sys.platform == "win32" and hasattr(sys.stdout, "reconfigure"):
     sys.stdout.reconfigure(encoding="utf-8")
     sys.stderr.reconfigure(encoding="utf-8")
 
-load_dotenv()
+load_dotenv(override=True)
 
 OLLAMA_BASE_URL = os.getenv("OLLAMA_BASE_URL", "http://localhost:11434")
 CHUNK_MODEL = os.getenv("CHUNK_MODEL", "gemma3:4b")
