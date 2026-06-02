@@ -1,0 +1,38 @@
+# Environment files
+.env
+.env*.local
+.env.example
+!.env.example
+
+# Python virtual environment
+.venv/
+venv/
+ENV/
+
+# Python caches & build artifacts
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.pytest_cache/
+.coverage
+htmlcov/
+build/
+dist/
+*.egg-info/
+
+# Next.js build and dependencies (for the landing folder)
+landing/.next/
+landing/node_modules/
+landing/.env
+landing/.env*.local
+landing/out/
+
+# IDE files
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.swp
