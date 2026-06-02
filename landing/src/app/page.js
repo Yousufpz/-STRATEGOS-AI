@@ -94,7 +94,7 @@ export default function LandingPage() {
           COMMAND THE BOARD
         </h1>
         <p className="hero-subtitle">
-          Consult the ultimate strategic chamber. Leverage AI semantic retrieval to navigate complex human relationships and workplace dynamics using Robert Greene's *The 48 Laws of Power*.
+          Consult the ultimate strategic chamber. Leverage AI semantic retrieval to navigate complex human relationships and workplace dynamics using Robert Greene's The 48 Laws of Power.
         </p>
         <div className="hero-ctas">
           <Link href="/try" className="btn-futuristic glow-box">
