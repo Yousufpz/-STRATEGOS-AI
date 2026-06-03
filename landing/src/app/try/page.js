@@ -9,6 +9,7 @@ export default function TryPage() {
   const [apiKey, setApiKey] = useState("");
   const [topK, setTopK] = useState(8);
   const [showChunks, setShowChunks] = useState(true);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const [loading, setLoading] = useState(false);
   const [activeStep, setActiveStep] = useState(-1);
@@ -131,18 +132,84 @@ export default function TryPage() {
         <Link href="/" className="nav-logo">
           🏛️ <span className="gold-text-gradient">STRATEGOS AI</span>
         </Link>
-        <ul className="nav-links">
+        <ul className="nav-links nav-links-desktop">
           <li><Link href="/">Overview</Link></li>
           <li><a href="#console">Console</a></li>
         </ul>
-        <Link href="/" className="btn-secondary-futuristic" style={{ padding: "0.6rem 1.5rem", fontSize: "0.85rem" }}>
-          Exit Chamber
-        </Link>
+        <div className="nav-right-group">
+          <Link href="/" className="btn-secondary-futuristic" style={{ padding: "0.6rem 1.5rem", fontSize: "0.85rem" }}>
+            Exit Chamber
+          </Link>
+          {/* Mobile config button */}
+          <button
+            className="hamburger-btn config-btn"
+            onClick={() => setSidebarOpen(!sidebarOpen)}
+            aria-label="Toggle chamber config"
+          >
+            ⚙️
+          </button>
+        </div>
       </nav>
+
+      {/* Mobile sidebar overlay */}
+      {sidebarOpen && (
+        <div className="mobile-menu-overlay" onClick={() => setSidebarOpen(false)}>
+          <div className="mobile-sidebar-drawer glass-panel" onClick={(e) => e.stopPropagation()}>
+            <div className="mobile-menu-header">
+              <span className="gold-text-gradient" style={{ fontFamily: "var(--font-serif)", letterSpacing: "0.1em" }}>CHAMBER CONFIG</span>
+              <button className="mobile-menu-close" onClick={() => setSidebarOpen(false)} aria-label="Close config">✕</button>
+            </div>
+            <div className="mobile-menu-divider"></div>
+            <div className="mobile-sidebar-content">
+              <div className="form-group">
+                <label>LLM Provider</label>
+                <select value={provider} onChange={(e) => setProvider(e.target.value)}>
+                  <option value="Gemini">Gemini (Recommended)</option>
+                  <option value="OpenAI">OpenAI</option>
+                  <option value="Anthropic">Anthropic</option>
+                  <option value="Ollama">Ollama (Local)</option>
+                </select>
+              </div>
+              {provider !== "Ollama" && (
+                <div className="form-group">
+                  <label>{provider} API Key</label>
+                  <input
+                    type="password"
+                    value={apiKey}
+                    onChange={(e) => handleApiKeyChange(e.target.value)}
+                    placeholder={`Paste your ${provider} key...`}
+                  />
+                  <span className="input-hint">🔒 Stored only in your browser session — never sent to our servers.</span>
+                </div>
+              )}
+              {provider === "Ollama" && (
+                <div className="ollama-notice">
+                  🦙 <strong>Local Inference Mode</strong><br />
+                  Ensure Ollama is running on port 11434 with models downloaded.
+                </div>
+              )}
+              <div className="form-group">
+                <label>Retrieve Passages: <span style={{ color: "var(--primary-gold)" }}>{topK}</span></label>
+                <input type="range" min="3" max="15" value={topK} onChange={(e) => setTopK(parseInt(e.target.value))} />
+                <span className="input-hint">More passages = richer context.</span>
+              </div>
+              <div className="sidebar-toggle-row">
+                <span>Show Source Passages</span>
+                <button className={`toggle-btn ${showChunks ? "on" : "off"}`} onClick={() => setShowChunks(!showChunks)} aria-label="Toggle passage display">
+                  <span className="toggle-knob" />
+                </button>
+              </div>
+              <button className="btn-futuristic" style={{ width: "100%", justifyContent: "center", marginTop: "1rem" }} onClick={() => setSidebarOpen(false)}>
+                Apply & Close
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       <div className="chamber-layout">
         {/* ── Sidebar ── */}
-        <aside className="glass-panel settings-panel">
+        <aside className="glass-panel settings-panel settings-panel-desktop">
           <h3 className="gold-text-gradient">CHAMBER CONFIG</h3>
           <div className="settings-line"></div>
 

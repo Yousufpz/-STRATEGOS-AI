@@ -1147,64 +1147,10 @@ h1, h2, h3, h4, .font-serif {
   font-style: italic;
 }
 
-/* Responsive adjustments for Chamber */
-@media (max-width: 1024px) {
-  .chamber-layout {
-    grid-template-columns: 1fr;
-  }
-}
 
-/* Clickable Example Scenario Pills in try chamber */
-.example-scenarios {
-  display: flex;
-  flex-direction: column;
-  gap: 0.6rem;
-  margin-bottom: 0.75rem;
-}
-
-.example-label {
-  font-family: var(--font-serif);
-  font-size: 0.72rem;
-  color: var(--primary-gold);
-  letter-spacing: 0.1em;
-  font-weight: 700;
-}
-
-.example-pills {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-}
-
-.example-pill-btn {
-  background: rgba(18, 18, 20, 0.45);
-  border: 1px solid rgba(212, 175, 55, 0.15);
-  border-radius: 9999px;
-  padding: 0.45rem 1rem;
-  color: var(--text-secondary);
-  font-size: 0.8rem;
-  cursor: pointer;
-  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-  text-align: left;
-  outline: none;
-}
-
-.example-pill-btn:hover {
-  background: rgba(212, 175, 55, 0.08);
-  border-color: var(--primary-gold);
-  color: var(--text-primary);
-  box-shadow: 0 0 12px rgba(212, 175, 55, 0.15);
-  transform: translateY(-1px);
-}
-
-.example-pill-btn:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-  transform: none !important;
-  box-shadow: none !important;
-}
-
-/* Hire Me & Share My Top Banner */
+/* ============================================================
+   HIRE ME BANNER
+   ============================================================ */
 .hire-banner {
   position: fixed;
   top: 0;
@@ -1315,21 +1261,1220 @@ h1, h2, h3, h4, .font-serif {
   to { transform: translateY(0); }
 }
 
-@media (max-width: 900px) {
+/* ============================================================
+   EXAMPLE SCENARIO PILLS (try chamber)
+   ============================================================ */
+.example-scenarios {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  margin-bottom: 0.75rem;
+}
+
+.example-label {
+  font-family: var(--font-serif);
+  font-size: 0.72rem;
+  color: var(--primary-gold);
+  letter-spacing: 0.1em;
+  font-weight: 700;
+}
+
+.example-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.example-pill-btn {
+  background: rgba(18, 18, 20, 0.45);
+  border: 1px solid rgba(212, 175, 55, 0.15);
+  border-radius: 9999px;
+  padding: 0.45rem 1rem;
+  color: var(--text-secondary);
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  text-align: left;
+  outline: none;
+}
+
+.example-pill-btn:hover {
+  background: rgba(212, 175, 55, 0.08);
+  border-color: var(--primary-gold);
+  color: var(--text-primary);
+  box-shadow: 0 0 12px rgba(212, 175, 55, 0.15);
+  transform: translateY(-1px);
+}
+
+.example-pill-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+/* ============================================================
+   HAMBURGER MENU & MOBILE NAV DRAWER
+   ============================================================ */
+
+.nav-right-group {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.hamburger-btn {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 40px;
+  height: 40px;
+  background: rgba(18, 18, 20, 0.6);
+  border: 1px solid rgba(212, 175, 55, 0.2);
+  border-radius: 6px;
+  cursor: pointer;
+  padding: 0;
+  gap: 5px;
+  transition: border-color 0.3s ease;
+  flex-shrink: 0;
+}
+
+.hamburger-btn:hover {
+  border-color: var(--primary-gold);
+}
+
+.ham-line {
+  display: block;
+  width: 18px;
+  height: 2px;
+  background: var(--primary-gold);
+  border-radius: 2px;
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  transform-origin: center;
+}
+
+.ham-line.ham-open:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+.ham-line.ham-open:nth-child(2) {
+  opacity: 0;
+  transform: scaleX(0);
+}
+.ham-line.ham-open:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
+}
+
+/* Config button variant on /try page */
+.config-btn {
+  font-size: 1.1rem;
+  line-height: 1;
+}
+
+/* Mobile Menu Overlay */
+.mobile-menu-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4px);
+  z-index: 500;
+  animation: fade-in 0.2s ease;
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* Mobile Nav Drawer (landing page) */
+.mobile-menu-drawer {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: min(360px, 88vw);
+  height: 100vh;
+  border-radius: 0;
+  border-left: 1px solid rgba(212, 175, 55, 0.2);
+  display: flex;
+  flex-direction: column;
+  padding: 2rem;
+  gap: 1.5rem;
+  animation: slide-in-right 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  overflow-y: auto;
+}
+
+@keyframes slide-in-right {
+  from { transform: translateX(100%); }
+  to { transform: translateX(0); }
+}
+
+/* Mobile Sidebar Drawer (/try page) */
+.mobile-sidebar-drawer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: min(380px, 92vw);
+  height: 100vh;
+  border-radius: 0;
+  border-right: 1px solid rgba(212, 175, 55, 0.2);
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  animation: slide-in-left 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  overflow-y: auto;
+}
+
+@keyframes slide-in-left {
+  from { transform: translateX(-100%); }
+  to { transform: translateX(0); }
+}
+
+.mobile-sidebar-content {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  padding: 1.5rem 2rem 2rem;
+  flex: 1;
+}
+
+.mobile-menu-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem 2rem 0;
+}
+
+.mobile-menu-logo {
+  font-family: var(--font-serif);
+  font-size: 1.1rem;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+}
+
+.mobile-menu-close {
+  background: transparent;
+  border: 1px solid rgba(212, 175, 55, 0.2);
+  border-radius: 4px;
+  color: var(--text-secondary);
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
+}
+
+.mobile-menu-close:hover {
+  border-color: var(--primary-gold);
+  color: var(--text-primary);
+}
+
+.mobile-menu-divider {
+  height: 1px;
+  background: var(--border-glass);
+  margin: 1rem 2rem 0;
+}
+
+.mobile-nav-links {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.mobile-nav-links li a {
+  display: block;
+  padding: 1rem 0;
+  font-family: var(--font-serif);
+  font-size: 1.05rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  text-decoration: none;
+  border-bottom: 1px solid rgba(212, 175, 55, 0.06);
+  transition: color 0.3s ease, padding-left 0.3s ease;
+}
+
+.mobile-nav-links li a:hover {
+  color: var(--primary-gold);
+  padding-left: 0.5rem;
+}
+
+.mobile-menu-cta {
+  margin-top: auto;
+  padding-top: 1.5rem;
+}
+
+/* Codex mobile pill tabs */
+.codex-tabs-mobile {
+  display: none;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.codex-tab-pill {
+  background: rgba(18, 18, 20, 0.5);
+  border: 1px solid rgba(212, 175, 55, 0.15);
+  border-radius: 9999px;
+  padding: 0.45rem 1.1rem;
+  color: var(--text-secondary);
+  font-family: var(--font-serif);
+  font-size: 0.82rem;
+  letter-spacing: 0.08em;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.codex-tab-pill:hover {
+  border-color: rgba(212, 175, 55, 0.4);
+  color: var(--text-primary);
+}
+
+.codex-tab-pill.active {
+  background: rgba(212, 175, 55, 0.1);
+  border-color: var(--primary-gold);
+  color: var(--primary-gold);
+}
+
+/* Hire-banner desktop-only elements */
+.hire-sep-desktop,
+.hire-contact-desktop,
+.hire-btn-desktop {
+  display: flex;
+}
+
+/* ============================================================
+   RESPONSIVE STATS BAR (/try page)
+   ============================================================ */
+.stats-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0;
+  padding: 1.25rem 2rem;
+  margin-bottom: 0;
+}
+
+.stat-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 1.5rem;
+  flex: 1 1 160px;
+  min-width: 0;
+}
+
+.stat-icon {
+  font-size: 1.4rem;
+  flex-shrink: 0;
+}
+
+.stat-content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  min-width: 0;
+}
+
+.stat-num {
+  font-family: var(--font-serif);
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--primary-gold);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.stat-label {
+  font-size: 0.7rem;
+  color: var(--text-secondary);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.stat-divider {
+  width: 1px;
+  background: var(--border-glass);
+  align-self: stretch;
+  margin: 0.5rem 0;
+  flex-shrink: 0;
+}
+
+/* ============================================================
+   REWRITE CARD
+   ============================================================ */
+.rewrite-card {
+  padding: 1.5rem 2rem;
+}
+
+.rewrite-inner {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.rewrite-label {
+  font-family: var(--font-serif);
+  font-size: 0.72rem;
+  letter-spacing: 0.15em;
+  color: var(--primary-gold);
+  font-weight: 700;
+}
+
+.rewrite-text {
+  font-style: italic;
+  color: var(--text-primary);
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+.rewrite-hint {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+}
+
+/* ============================================================
+   SECTION TAGS (counsel sections)
+   ============================================================ */
+.section-tag {
+  font-family: var(--font-serif);
+  font-size: 0.75rem;
+  letter-spacing: 0.15em;
+  color: var(--text-gold);
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+/* ============================================================
+   WORKSPACE HEADER ROW
+   ============================================================ */
+.workspace-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.oracle-badge-stack {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-shrink: 0;
+  padding-top: 0.25rem;
+}
+
+.oracle-live-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #4ade80;
+  box-shadow: 0 0 8px #4ade80;
+  animation: pulse-dot 2s infinite;
+}
+
+.oracle-live-label {
+  font-family: var(--font-serif);
+  font-size: 0.7rem;
+  letter-spacing: 0.15em;
+  color: #4ade80;
+  font-weight: 700;
+}
+
+/* ============================================================
+   CHAR COUNT
+   ============================================================ */
+.char-count {
+  font-size: 0.75rem;
+  color: rgba(161, 161, 170, 0.5);
+  align-self: center;
+}
+
+/* ============================================================
+   VAULT HEADER ROW
+   ============================================================ */
+.vault-header-row {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  margin-bottom: 2rem;
+}
+
+.vault-sub {
+  font-size: 0.78rem;
+  color: var(--text-secondary);
+  letter-spacing: 0.05em;
+}
+
+/* ============================================================
+   GAMIFIED CHUNK ITEMS
+   ============================================================ */
+.chunk-item-gamified {
+  display: flex;
+  gap: 1rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px dashed rgba(212, 175, 55, 0.08);
+}
+
+.chunk-item-gamified:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.chunk-rank {
+  flex-shrink: 0;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  border: 1px solid;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.72rem;
+  font-weight: 700;
+  font-family: var(--font-serif);
+  margin-top: 0.15rem;
+}
+
+.chunk-body {
+  flex: 1;
+  min-width: 0;
+}
+
+.chunk-meta-gamified {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.chunk-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.chunk-tag {
+  font-size: 0.72rem;
+  padding: 3px 8px;
+  border-radius: 3px;
+  font-family: monospace;
+  letter-spacing: 0.03em;
+}
+
+.law-tag {
+  background: rgba(212, 175, 55, 0.08);
+  color: var(--primary-gold);
+  border: 1px solid rgba(212, 175, 55, 0.2);
+}
+
+.general-tag {
+  background: rgba(6, 182, 212, 0.06);
+  color: var(--accent-cyan);
+  border: 1px solid rgba(6, 182, 212, 0.15);
+}
+
+.page-tag {
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--text-secondary);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.section-tag-chunk {
+  background: rgba(255, 255, 255, 0.03);
+  color: rgba(161, 161, 170, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  text-transform: capitalize;
+}
+
+.chunk-score-box {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-shrink: 0;
+}
+
+.chunk-score-bar-track {
+  width: 60px;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.chunk-score-bar-fill {
+  height: 100%;
+  border-radius: 2px;
+  transition: width 0.4s ease;
+}
+
+.chunk-score-num {
+  font-size: 0.78rem;
+  font-family: monospace;
+  font-weight: 700;
+  min-width: 44px;
+  text-align: right;
+}
+
+.chunk-content-full {
+  font-size: 0.9rem;
+  line-height: 1.65;
+  color: rgba(228, 228, 231, 0.75);
+  font-style: italic;
+  word-break: break-word;
+}
+
+/* ============================================================
+   CONFIDENCE ROW
+   ============================================================ */
+.confidence-full-row {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  border-top: 1px solid var(--border-glass);
+  padding-top: 2rem;
+  margin-top: 0.5rem;
+}
+
+.confidence-row-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.confidence-row-header h5 {
+  font-family: var(--font-serif);
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  color: var(--text-secondary);
+}
+
+.confidence-reasoning {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+/* ============================================================
+   SIDEBAR TOGGLE & TECH STACK
+   ============================================================ */
+.sidebar-toggle-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+}
+
+.toggle-btn {
+  position: relative;
+  width: 42px;
+  height: 22px;
+  border-radius: 11px;
+  border: 1px solid rgba(212, 175, 55, 0.3);
+  background: rgba(10, 10, 12, 0.8);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  flex-shrink: 0;
+}
+
+.toggle-btn.on {
+  background: rgba(212, 175, 55, 0.15);
+  border-color: var(--primary-gold);
+}
+
+.toggle-knob {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: rgba(161, 161, 170, 0.5);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.toggle-btn.on .toggle-knob {
+  left: calc(100% - 18px);
+  background: var(--primary-gold);
+}
+
+.sidebar-tips {
+  background: rgba(212, 175, 55, 0.02);
+  border: 1px solid rgba(212, 175, 55, 0.08);
+  border-radius: 6px;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.tip-header {
+  font-family: var(--font-serif);
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  color: var(--primary-gold);
+  font-weight: 700;
+}
+
+.tip-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.tip-list li {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  line-height: 1.4;
+  padding-left: 0.75rem;
+  position: relative;
+}
+
+.tip-list li::before {
+  content: '›';
+  position: absolute;
+  left: 0;
+  color: var(--primary-gold);
+}
+
+.tech-stack-box {
+  background: rgba(6, 182, 212, 0.03);
+  border: 1px solid rgba(6, 182, 212, 0.1);
+  border-radius: 6px;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.tech-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.8rem;
+}
+
+.tech-label {
+  color: rgba(161, 161, 170, 0.6);
+  letter-spacing: 0.04em;
+}
+
+.tech-val {
+  color: #a5f3fc;
+  font-family: monospace;
+  font-size: 0.78rem;
+}
+
+/* Step text & spinner */
+.step-text {
+  font-size: 0.9rem;
+  flex: 1;
+}
+
+.step-spinner {
+  color: var(--primary-gold);
+  font-size: 1rem;
+  letter-spacing: 0.1em;
+  animation: fade-in-out 1s infinite;
+}
+
+@keyframes fade-in-out {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 1; }
+}
+
+/* ============================================================
+   TABLET BREAKPOINT — 1024px
+   ============================================================ */
+@media (max-width: 1024px) {
+  /* Hire banner compact */
   .hire-banner {
-    padding: 0 1rem;
-    height: auto;
-    min-height: 44px;
-    flex-direction: column;
-    gap: 0.5rem;
-    padding-top: 0.5rem;
-    padding-bottom: 0.5rem;
+    padding: 0 1.5rem;
+    font-size: 0.75rem;
   }
+
+  /* Navbar */
   .navbar {
-    top: 7rem;
+    padding: 0.85rem 1.5rem;
+    left: 3%;
+    right: 3%;
+    width: 94%;
   }
+
+  .nav-links {
+    gap: 2rem;
+  }
+
+  /* Landing container */
   .landing-container {
-    padding-top: 14rem;
+    padding-top: 10.5rem;
+  }
+
+  /* Hero */
+  .hero-title {
+    font-size: 3rem;
+  }
+
+  .hero-subtitle {
+    font-size: 1.05rem;
+  }
+
+  /* Pillars: 2-column grid */
+  .pillars-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  /* Codex */
+  .codex-layout {
+    grid-template-columns: 240px 1fr;
+    gap: 1.5rem;
+  }
+
+  .codex-display {
+    padding: 2.5rem;
+  }
+
+  /* Chamber layout: stack on tablet */
+  .chamber-layout {
+    grid-template-columns: 1fr;
+  }
+
+  /* Stats bar: wrap */
+  .stats-bar {
+    padding: 1rem 1.5rem;
+  }
+
+  .stat-item {
+    padding: 0.5rem 1rem;
+  }
+
+  .stat-divider {
+    display: none;
+  }
+
+  /* Counsel card */
+  .counsel-card {
+    padding: 2.5rem;
+    gap: 2rem;
+  }
+
+  /* Chunks panel */
+  .chunks-inspection-panel {
+    padding: 2rem;
   }
 }
 
+/* ============================================================
+   MOBILE BREAKPOINT — 768px
+   ============================================================ */
+@media (max-width: 768px) {
+  /* Show hamburger, hide desktop nav links */
+  .hamburger-btn {
+    display: flex;
+  }
+
+  .nav-links-desktop {
+    display: none !important;
+  }
+
+  .nav-cta-btn {
+    display: none !important;
+  }
+
+  /* Show mobile codex pill tabs, hide desktop sidebar */
+  .codex-tabs-mobile {
+    display: flex;
+  }
+
+  .codex-sidebar-desktop {
+    display: none !important;
+  }
+
+  /* Hide desktop-only hire banner elements */
+  .hire-sep-desktop,
+  .hire-contact-desktop,
+  .hire-btn-desktop {
+    display: none !important;
+  }
+
+  /* Hide desktop settings panel on try page */
+  .settings-panel-desktop {
+    display: none !important;
+  }
+
+  /* Show the config gear button */
+  .config-btn {
+    display: flex !important;
+  }
+
+  /* ── Hire Banner ── */
+  .hire-banner {
+    padding: 0 1rem;
+    height: 40px;
+    min-height: 40px;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  .hire-left {
+    gap: 0.5rem;
+    min-width: 0;
+    overflow: hidden;
+  }
+
+  .hire-name {
+    font-size: 0.75rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  /* ── Navbar ── */
+  .navbar {
+    top: 2.75rem;
+    left: 0;
+    right: 0;
+    width: 100%;
+    border-radius: 0;
+    padding: 0.85rem 1.25rem;
+    border-left: none;
+    border-right: none;
+    border-radius: 0;
+  }
+
+  .nav-logo {
+    font-size: 1.1rem;
+  }
+
+  /* ── Landing Container ── */
+  .landing-container {
+    padding-top: 7.5rem;
+  }
+
+  /* ── Hero Section ── */
+  .hero-section {
+    padding: 1.5rem 1.25rem;
+    min-height: auto;
+    margin-bottom: 2rem;
+  }
+
+  .hero-badge {
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    padding: 5px 12px;
+    margin-bottom: 1.25rem;
+  }
+
+  .hero-title {
+    font-size: clamp(1.75rem, 8vw, 2.75rem);
+    letter-spacing: 0.05em;
+    margin-bottom: 1rem;
+  }
+
+  .hero-subtitle {
+    font-size: 0.95rem;
+    line-height: 1.65;
+    margin-bottom: 2rem;
+  }
+
+  .hero-ctas {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.85rem;
+    width: 100%;
+    max-width: 360px;
+  }
+
+  .hero-ctas .btn-futuristic,
+  .hero-ctas .btn-secondary-futuristic {
+    text-align: center;
+    justify-content: center;
+    padding: 0.9rem 1.5rem;
+    font-size: 0.82rem;
+  }
+
+  /* ── Sections ── */
+  .section-container {
+    padding: 3.5rem 1.25rem;
+  }
+
+  .section-header {
+    margin-bottom: 2.5rem;
+  }
+
+  .section-title {
+    font-size: clamp(1.4rem, 5vw, 1.9rem);
+  }
+
+  /* ── Pillars: single column ── */
+  .pillars-grid {
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+  }
+
+  .pillar-card {
+    padding: 2rem 1.5rem;
+  }
+
+  /* ── Timeline ── */
+  .timeline-container {
+    padding-left: 2.5rem;
+  }
+
+  .timeline-dot {
+    left: -2.5rem;
+    width: 1.75rem;
+    height: 1.75rem;
+    font-size: 0.78rem;
+  }
+
+  .timeline-content {
+    padding: 1.5rem;
+  }
+
+  /* ── Codex ── */
+  .codex-layout {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+
+  .codex-display {
+    padding: 1.75rem 1.25rem;
+    min-height: auto;
+    align-items: flex-start;
+  }
+
+  .codex-content h3 {
+    font-size: 1.3rem;
+  }
+
+  .codex-content {
+    gap: 1.25rem;
+  }
+
+  /* ── Footer ── */
+  .footer-cta {
+    padding: 4rem 1.25rem;
+  }
+
+  .footer-cta h2 {
+    font-size: clamp(1.4rem, 5vw, 2rem);
+  }
+
+  .footer-cta p {
+    font-size: 0.9rem;
+  }
+
+  /* ── /try Chamber Layout ── */
+  .chamber-container {
+    padding-top: 5.5rem;
+  }
+
+  .chamber-layout {
+    padding: 1.25rem;
+    gap: 1.25rem;
+  }
+
+  /* ── Workspace Card ── */
+  .workspace-card {
+    padding: 1.5rem 1.25rem;
+  }
+
+  .workspace-header-row {
+    margin-bottom: 1rem;
+    align-items: center;
+  }
+
+  .workspace-card h2 {
+    font-size: 1.25rem;
+  }
+
+  .workspace-desc {
+    font-size: 0.88rem;
+    margin-bottom: 1.25rem;
+  }
+
+  /* ── Example Pills ── */
+  .example-pills {
+    gap: 0.4rem;
+  }
+
+  .example-pill-btn {
+    font-size: 0.75rem;
+    padding: 0.4rem 0.85rem;
+  }
+
+  /* ── Stats Bar ── */
+  .stats-bar {
+    padding: 0.75rem 1rem;
+    gap: 0.5rem;
+  }
+
+  .stat-item {
+    flex: 1 1 calc(50% - 0.5rem);
+    padding: 0.6rem 0.75rem;
+    gap: 0.5rem;
+  }
+
+  .stat-icon {
+    font-size: 1.1rem;
+  }
+
+  .stat-num {
+    font-size: 0.95rem;
+  }
+
+  .stat-label {
+    font-size: 0.62rem;
+  }
+
+  .stat-divider {
+    display: none;
+  }
+
+  /* ── Rewrite Card ── */
+  .rewrite-card {
+    padding: 1.25rem;
+  }
+
+  /* ── Counsel Card ── */
+  .counsel-card {
+    padding: 1.5rem 1.25rem;
+    gap: 1.5rem;
+  }
+
+  .counsel-header {
+    padding-bottom: 1.25rem;
+  }
+
+  .counsel-meta-row {
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+    padding-top: 1.5rem;
+  }
+
+  .laws-section {
+    padding: 1.25rem;
+  }
+
+  .law-declaration {
+    font-size: 1rem;
+    line-height: 1.55;
+  }
+
+  .interpretation-content {
+    font-size: 0.95rem;
+  }
+
+  /* ── Chunks Panel ── */
+  .chunks-inspection-panel {
+    padding: 1.5rem 1.25rem;
+  }
+
+  .vault-header-row {
+    margin-bottom: 1.25rem;
+  }
+
+  .chunk-item-gamified {
+    gap: 0.75rem;
+  }
+
+  .chunk-rank {
+    width: 1.6rem;
+    height: 1.6rem;
+    font-size: 0.65rem;
+  }
+
+  .chunk-meta-gamified {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .chunk-score-box {
+    align-self: flex-start;
+  }
+
+  .chunk-content-full {
+    font-size: 0.85rem;
+    line-height: 1.6;
+  }
+
+  /* ── Pipeline Card ── */
+  .pipeline-card {
+    padding: 1.5rem 1.25rem;
+  }
+
+  /* ── Error Card ── */
+  .error-card {
+    padding: 1.5rem 1.25rem;
+  }
+
+  /* ── Confidence ── */
+  .confidence-full-row {
+    padding-top: 1.5rem;
+  }
+
+  .confidence-row-header h5 {
+    font-size: 0.7rem;
+  }
+}
+
+/* ============================================================
+   SMALL MOBILE — 480px
+   ============================================================ */
+@media (max-width: 480px) {
+  .hire-banner {
+    height: 38px;
+    min-height: 38px;
+  }
+
+  .hire-badge {
+    font-size: 0.58rem;
+    padding: 2px 6px;
+  }
+
+  .hero-title {
+    font-size: clamp(1.6rem, 9vw, 2.4rem);
+  }
+
+  .navbar {
+    top: 2.5rem;
+  }
+
+  .landing-container {
+    padding-top: 7rem;
+  }
+
+  .stat-item {
+    flex: 1 1 100%;
+    border-bottom: 1px solid var(--border-glass);
+  }
+
+  .stat-item:last-child {
+    border-bottom: none;
+  }
+
+  .codex-display {
+    padding: 1.25rem 1rem;
+  }
+
+  .codex-content h3 {
+    font-size: 1.1rem;
+  }
+
+  .mobile-menu-drawer,
+  .mobile-sidebar-drawer {
+    width: 92vw;
+  }
+}

@@ -1,20 +1,36 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 export default function LandingPage() {
   const [activeLaw, setActiveLaw] = useState(1);
   const [shareText, setShareText] = useState("Share My");
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  // Close menu on route change / escape key
+  useEffect(() => {
+    const handleKey = (e) => { if (e.key === "Escape") setMenuOpen(false); };
+    window.addEventListener("keydown", handleKey);
+    return () => window.removeEventListener("keydown", handleKey);
+  }, []);
+
+  // Prevent body scroll when menu is open
+  useEffect(() => {
+    document.body.style.overflow = menuOpen ? "hidden" : "";
+    return () => { document.body.style.overflow = ""; };
+  }, [menuOpen]);
 
   const handleShare = () => {
-    const textToCopy = "Mohd Yousuf - AI Engineer | Contact Me - mohdyousufparvez@gmmail.com | 8707563162";
+    const textToCopy = "Mohd Yousuf - AI Engineer | Contact Me - mohdyousufparvez@gmail.com | 8707563162";
     navigator.clipboard.writeText(textToCopy);
     setShareText("Copied! ✓");
     setTimeout(() => {
       setShareText("Share My");
     }, 2000);
   };
+
+  const handleNavLinkClick = () => setMenuOpen(false);
 
   const sampleLaws = [
     {
@@ -50,20 +66,20 @@ export default function LandingPage() {
         <div className="hire-left">
           <span className="hire-badge">Hire Me</span>
           <span className="hire-name">Mohd Yousuf</span>
-          <span className="hire-separator">|</span>
-          <a href="mailto:mohdyousufparvez@gmail.com" className="hire-contact">
+          <span className="hire-separator hire-sep-desktop">|</span>
+          <a href="mailto:mohdyousufparvez@gmail.com" className="hire-contact hire-contact-desktop">
             mohdyousufparvez@gmail.com
           </a>
-          <span className="hire-separator">|</span>
+          <span className="hire-separator hire-sep-desktop">|</span>
           <a href="tel:8707563162" className="hire-contact">
             8707563162
           </a>
         </div>
         <div className="hire-right">
-          <a href="#resume" className="hire-btn-action">
+          <a href="#resume" className="hire-btn-action hire-btn-desktop">
             Resume 📄
           </a>
-          <a href="#portfolio" className="hire-btn-action">
+          <a href="#portfolio" className="hire-btn-action hire-btn-desktop">
             Portfolio 🌐
           </a>
           <button onClick={handleShare} className="hire-btn-share glow-box">
@@ -77,15 +93,54 @@ export default function LandingPage() {
         <Link href="/" className="nav-logo">
           🏛️ <span className="gold-text-gradient">STRATEGOS AI</span>
         </Link>
-        <ul className="nav-links">
+
+        {/* Desktop nav links */}
+        <ul className="nav-links nav-links-desktop">
           <li><a href="#vault">Vault</a></li>
           <li><a href="#architecture">Architecture</a></li>
           <li><a href="#codex">Codex</a></li>
         </ul>
-        <Link href="/try" className="btn-futuristic" style={{ padding: "0.6rem 1.5rem", fontSize: "0.85rem" }}>
-          Consult Oracle
-        </Link>
+
+        <div className="nav-right-group">
+          <Link href="/try" className="btn-futuristic nav-cta-btn">
+            Consult Oracle
+          </Link>
+          {/* Hamburger button — mobile only */}
+          <button
+            className="hamburger-btn"
+            onClick={() => setMenuOpen(!menuOpen)}
+            aria-label="Toggle navigation menu"
+            aria-expanded={menuOpen}
+          >
+            <span className={`ham-line ${menuOpen ? "ham-open" : ""}`}></span>
+            <span className={`ham-line ${menuOpen ? "ham-open" : ""}`}></span>
+            <span className={`ham-line ${menuOpen ? "ham-open" : ""}`}></span>
+          </button>
+        </div>
       </nav>
+
+      {/* Mobile Menu Overlay */}
+      {menuOpen && (
+        <div className="mobile-menu-overlay" onClick={() => setMenuOpen(false)}>
+          <nav className="mobile-menu-drawer glass-panel" onClick={(e) => e.stopPropagation()}>
+            <div className="mobile-menu-header">
+              <span className="gold-text-gradient mobile-menu-logo">🏛️ STRATEGOS AI</span>
+              <button className="mobile-menu-close" onClick={() => setMenuOpen(false)} aria-label="Close menu">✕</button>
+            </div>
+            <div className="mobile-menu-divider"></div>
+            <ul className="mobile-nav-links">
+              <li><a href="#vault" onClick={handleNavLinkClick}>⚔️ Vault</a></li>
+              <li><a href="#architecture" onClick={handleNavLinkClick}>🏗️ Architecture</a></li>
+              <li><a href="#codex" onClick={handleNavLinkClick}>📜 Codex</a></li>
+            </ul>
+            <div className="mobile-menu-cta">
+              <Link href="/try" className="btn-futuristic glow-box" onClick={handleNavLinkClick} style={{ width: "100%", justifyContent: "center" }}>
+                ENTER THE CHAMBER ➔
+              </Link>
+            </div>
+          </nav>
+        </div>
+      )}
 
       {/* Hero Section */}
       <section className="hero-section">
@@ -200,8 +255,22 @@ export default function LandingPage() {
           <div className="section-line"></div>
         </div>
 
+        {/* Mobile: horizontal pill tabs */}
+        <div className="codex-tabs-mobile">
+          {sampleLaws.map((law) => (
+            <button
+              key={law.id}
+              onClick={() => setActiveLaw(law.id)}
+              className={`codex-tab-pill ${activeLaw === law.id ? "active" : ""}`}
+            >
+              Law {law.id}
+            </button>
+          ))}
+        </div>
+
         <div className="codex-layout">
-          <div className="codex-sidebar">
+          {/* Desktop sidebar */}
+          <div className="codex-sidebar codex-sidebar-desktop">
             {sampleLaws.map((law) => (
               <button
                 key={law.id}
