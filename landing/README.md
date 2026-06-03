@@ -1,8 +1,9 @@
 
-# STRATEGOS AI — The Complete Project Bible
+# STRATEGOS AI — The Complete Project Bible - https://strategos-ai-rag.vercel.app/
 
 > _Read this document end to end and you will understand everything about this project: how it was built, why every decision was made, and how to talk about it confidently in any technical interview._
 
+link - https://strategos-ai-rag.vercel.app/
 
 ## Getting Started
 ![alt text](image.png)
