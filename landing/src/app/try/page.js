@@ -129,7 +129,7 @@ export default function TryPage() {
   return (
     <main className="chamber-container">
       <nav className="navbar glass-panel">
-        <Link href="/" className="nav-logo">
+        <Link href="/" className="nav-logo" style={{ flexShrink: 0 }}>
           🏛️ <span className="gold-text-gradient">STRATEGOS AI</span>
         </Link>
         <ul className="nav-links nav-links-desktop">
@@ -137,7 +137,7 @@ export default function TryPage() {
           <li><a href="#console">Console</a></li>
         </ul>
         <div className="nav-right-group">
-          <Link href="/" className="btn-secondary-futuristic" style={{ padding: "0.6rem 1.5rem", fontSize: "0.85rem" }}>
+          <Link href="/" className="btn-secondary-futuristic hire-btn-desktop" style={{ padding: "0.6rem 1.5rem", fontSize: "0.85rem" }}>
             Exit Chamber
           </Link>
           {/* Mobile config button */}

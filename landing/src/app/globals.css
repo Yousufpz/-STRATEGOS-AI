@@ -34,21 +34,33 @@
 
 html {
   background-color: var(--bg-obsidian);
+  overflow-x: hidden;
+  /* Fix for mobile: background-attachment:fixed is broken on iOS/Android Chrome.
+     We use a fixed pseudo-element on html instead — this works everywhere. */
 }
 
-body {
-  background-image: 
+html::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  background-image:
     linear-gradient(to bottom, rgba(9, 9, 11, 0.55) 0%, rgba(5, 5, 7, 0.8) 100%),
     url('/chamber_bg.png');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  background-attachment: fixed;
+  /* No background-attachment needed — the element itself is fixed */
+}
+
+body {
+  background-color: transparent;
   color: var(--text-primary);
   font-family: var(--font-sans);
   min-height: 100vh;
   overflow-x: hidden;
   scroll-behavior: smooth;
+  position: relative;
 }
 
 /* Scrollbar styling */
@@ -94,6 +106,9 @@ body {
   opacity: 0.15;
   z-index: -1;
   animation: float 25s ease-in-out infinite alternate;
+  /* Don't let spheres cause horizontal scroll */
+  max-width: 100vw;
+  overflow: hidden;
 }
 
 .sphere-gold {
@@ -309,11 +324,13 @@ h1, h2, h3, h4, .font-serif {
 /* Landing Layout Styling */
 .landing-container {
   width: 100%;
+  max-width: 100vw;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   padding-top: 11rem;
+  overflow-x: hidden;
 }
 
 /* Hero Section */
@@ -371,6 +388,7 @@ h1, h2, h3, h4, .font-serif {
   padding: 6rem 2rem;
   display: flex;
   flex-direction: column;
+  box-sizing: border-box;
 }
 
 .section-header {
@@ -631,10 +649,12 @@ h1, h2, h3, h4, .font-serif {
 /* Try/Chamber UI Styling */
 .chamber-container {
   width: 100%;
+  max-width: 100vw;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   padding-top: 6.5rem;
+  overflow-x: hidden;
 }
 
 .chamber-layout {
@@ -646,6 +666,7 @@ h1, h2, h3, h4, .font-serif {
   margin: 0 auto;
   padding: 2rem;
   align-items: start;
+  box-sizing: border-box;
 }
 
 /* Settings Sidebar */
@@ -1155,7 +1176,9 @@ h1, h2, h3, h4, .font-serif {
   position: fixed;
   top: 0;
   left: 0;
+  right: 0;
   width: 100%;
+  max-width: 100vw;
   height: 44px;
   background: rgba(9, 9, 11, 0.95);
   backdrop-filter: blur(12px);
@@ -1163,6 +1186,7 @@ h1, h2, h3, h4, .font-serif {
   border-bottom: 1px solid rgba(212, 175, 55, 0.3);
   z-index: 1000;
   display: flex;
+  flex-wrap: nowrap;
   justify-content: space-between;
   align-items: center;
   padding: 0 3rem;
@@ -1170,6 +1194,7 @@ h1, h2, h3, h4, .font-serif {
   color: var(--text-primary);
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
   animation: slide-down 0.5s ease-out;
+  overflow: hidden;
 }
 
 .hire-left {
@@ -2118,24 +2143,36 @@ h1, h2, h3, h4, .font-serif {
 
   /* ── Hire Banner ── */
   .hire-banner {
-    padding: 0 1rem;
+    padding: 0 0.75rem;
     height: 40px;
     min-height: 40px;
+    max-width: 100vw;
+    overflow: hidden;
     flex-direction: row;
     justify-content: space-between;
+    flex-wrap: nowrap;
+    gap: 0.5rem;
   }
 
   .hire-left {
-    gap: 0.5rem;
+    gap: 0.4rem;
     min-width: 0;
+    flex: 1;
     overflow: hidden;
+    flex-wrap: nowrap;
+  }
+
+  .hire-right {
+    flex-shrink: 0;
+    gap: 0.5rem;
   }
 
   .hire-name {
-    font-size: 0.75rem;
+    font-size: 0.73rem;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    max-width: 110px;
   }
 
   /* ── Navbar ── */
@@ -2144,11 +2181,12 @@ h1, h2, h3, h4, .font-serif {
     left: 0;
     right: 0;
     width: 100%;
+    max-width: 100vw;
     border-radius: 0;
     padding: 0.85rem 1.25rem;
     border-left: none;
     border-right: none;
-    border-radius: 0;
+    overflow: hidden;
   }
 
   .nav-logo {
